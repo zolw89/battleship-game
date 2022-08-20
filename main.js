@@ -16,7 +16,17 @@
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_ship__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/ship */ \"./src/modules/ship.js\");\n\n\nconsole.log((0,_modules_ship__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(4))\n\n\n//# sourceURL=webpack://battleship-game/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_ship__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/ship */ \"./src/modules/ship.js\");\n/* harmony import */ var _modules_gameboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/gameboard */ \"./src/modules/gameboard.js\");\n\n\n\nconsole.log((0,_modules_ship__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(4))\n\n\n//# sourceURL=webpack://battleship-game/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/modules/gameboard.js":
+/*!**********************************!*\
+  !*** ./src/modules/gameboard.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst Gameboard = () => {\r\n\r\n    //CREATE BOARD (NUM X NUM)\r\n\r\n    let board = []\r\n\r\n    const createBoard = (num) => {\r\n        for(let i = 0; i < num; i++) {\r\n            board.push([])\r\n            for(let j = 0; j < num; j++) {\r\n                board[i].push('')\r\n            }\r\n        }\r\n        return board\r\n    }\r\n\r\n\r\n    const placeShip = (ship, row, col) => {\r\n        if(col + ship.length > 10) return alert('cant place there')\r\n        for(let i = 0; i < ship.length; i++) {\r\n            board[row][col + i] = ship[i]\r\n        }\r\n        console.log(board)\r\n        \r\n    }\r\n\r\n\r\n    return {\r\n        createBoard,\r\n        placeShip,\r\n        board\r\n    }\r\n    \r\n}\r\n\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Gameboard);\n\n//# sourceURL=webpack://battleship-game/./src/modules/gameboard.js?");
 
 /***/ }),
 
@@ -26,7 +36,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mod
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst ship = (length) => {\r\n\r\n    const shipLength = length;\r\n\r\n    let shipArr = [];\r\n\r\n    const shipPositions = (shipLength) => {     \r\n        for(let i = 1; i <= shipLength; i++) {\r\n            shipArr.push(`${i}`)\r\n        }\r\n    }\r\n\r\n    shipPositions(shipLength)\r\n    \r\n    const hit = (num) => {\r\n        for(let i = 0; i < shipLength; i++) {\r\n            if(shipArr[i] == num) {\r\n                shipArr[i] = 'hit'\r\n            }\r\n        }\r\n        return shipArr\r\n    };\r\n\r\n    const isSunk = () => shipArr.every(pos => pos === 'hit');\r\n\r\n    return {\r\n        shipLength,\r\n        shipArr,\r\n        hit,\r\n        isSunk\r\n    }\r\n}\r\n\r\nlet destroyer = ship(5);\r\ndestroyer.hit(2)\r\ndestroyer.hit(5)\r\ndestroyer.hit(1)\r\ndestroyer.hit(3)\r\ndestroyer.hit(4)\r\nconsole.log(destroyer.isSunk())\r\n\r\n\r\nconsole.log(destroyer)\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ship);\n\n//# sourceURL=webpack://battleship-game/./src/modules/ship.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst Ship = (length) => {\r\n\r\n    const id = length;\r\n    const shipLength = length;\r\n\r\n    let shipArr = [];\r\n\r\n    const shipPositions = (shipLength) => {     \r\n        for(let i = 1; i <= shipLength; i++) {\r\n            shipArr.push(`${i}`)\r\n        }\r\n    }\r\n\r\n    shipPositions(shipLength)\r\n    \r\n    const hit = (num) => {\r\n        for(let i = 0; i < shipLength; i++) {\r\n            if(shipArr[i] == num) {\r\n                shipArr[i] = 'hit'\r\n            }\r\n        }\r\n        return shipArr\r\n    };\r\n\r\n    const isSunk = () => shipArr.every(pos => pos === 'hit');\r\n\r\n    return {\r\n        id,\r\n        shipLength,\r\n        shipArr,\r\n        hit,\r\n        isSunk\r\n    }\r\n}\r\n\r\n// let destroyer = ship(5);\r\n// destroyer.hit(2)\r\n// destroyer.hit(5)\r\n// destroyer.hit(1)\r\n// destroyer.hit(3)\r\n// destroyer.hit(4)\r\n// console.log(destroyer.isSunk())\r\n\r\n\r\n// console.log(destroyer)\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Ship);\n\n//# sourceURL=webpack://battleship-game/./src/modules/ship.js?");
 
 /***/ })
 
