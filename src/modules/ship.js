@@ -1,5 +1,6 @@
-const ship = (length) => {
+const Ship = (length) => {
 
+    const id = length;
     const shipLength = length;
 
     let shipArr = [];
@@ -24,6 +25,7 @@ const ship = (length) => {
     const isSunk = () => shipArr.every(pos => pos === 'hit');
 
     return {
+        id,
         shipLength,
         shipArr,
         hit,
@@ -42,4 +44,4 @@ const ship = (length) => {
 
 // console.log(destroyer)
 
-export default ship
+export default Ship

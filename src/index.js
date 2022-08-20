@@ -1,3 +1,4 @@
-import ship from "./modules/ship";
+import Ship from "./modules/ship";
+import Gameboard from "./modules/gameboard";
 
-console.log(ship(4))
+console.log(Ship(4))

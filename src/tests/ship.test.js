@@ -1,6 +1,6 @@
-import ship from "../modules/ship"
+import Ship from "../modules/ship"
 
-let destroyer = ship(5);
+let destroyer = Ship(5);
 
 
 
