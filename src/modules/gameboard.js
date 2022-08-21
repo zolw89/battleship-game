@@ -4,6 +4,8 @@ const Gameboard = () => {
 
     let board = []
 
+    const placedShips = []
+
     const createBoard = (num) => {
         for(let i = 0; i < num; i++) {
             board.push([])
@@ -20,7 +22,7 @@ const Gameboard = () => {
         for(let i = 0; i < ship.shipLength; i++) {
             board[row][col + i] = { ship, index: ship.shipArr[i] }
         }
-        
+        placedShips.push(ship) 
     }
 
     const receiveAttack = (row, col) => {
@@ -34,11 +36,13 @@ const Gameboard = () => {
         return board[row][col]
     }
 
+    const areAllSunk = () => placedShips.every((ship) => ship.isSunk());
 
     return {
         createBoard,
         placeShip,
         receiveAttack,
+        areAllSunk,
         board
     }
     

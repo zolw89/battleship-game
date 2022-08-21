@@ -18,7 +18,7 @@ describe('Gameboard', () => {
         })
     })
 
-    describe('Place ship', () => {
+    describe('Place ship and receive attack', () => {
         const gameboard = Gameboard();
         gameboard.createBoard(10)
 
@@ -35,18 +35,48 @@ describe('Gameboard', () => {
             let actual = gameboard.board[2][5]
             expect(actual).toBe('hit')
         })
-        
-
 
         test('receive attack at cords 2,6 should have index equals 2', () => {
             let actual = gameboard.board[2][6].ship.shipArr[1]
             expect(actual).toBe('2')
         })
 
-        test('receive attack at cords 2,6 should put hit in corresponding ship arr and board', () => {
+        test('receive attack at cords 2,6 should put hit in corresponding ship array and board', () => {
             gameboard.receiveAttack(2,6)
             let actual = gameboard.board[2][6]
+            let shipActual = cruiser.shipArr[1]
             expect(actual).toBe('hit')
+            expect(shipActual).toBe('hit')
         })
+
+        test('receive attack at cords 2,5 2,6 and 2,7 should makes ship sunk', () => {
+            gameboard.receiveAttack(2,7)
+            let actual = cruiser.isSunk()
+            expect(actual).toBe(true)
+        })
+
+
+        test('check if there is only cruiser with all hit, all are sunk should be true', () => {
+            let actual = gameboard.areAllSunk()
+            expect(actual).toBe(true)
+
+        })
+
+        test('check if we add another ship without all hit, all are sunk should be true', () => {
+            let destroyer = Ship(2)
+            gameboard.placeShip(destroyer, 8, 2)
+            let actual = gameboard.areAllSunk()
+            expect(actual).toBe(false)
+        })
+
+        test('check if we add another ship without any hits, all are sunk should be false', () => {
+            gameboard.receiveAttack(8,2)
+            gameboard.receiveAttack(8,3)
+            let actual = gameboard.areAllSunk()
+            expect(actual).toBe(true)
+        })
+
+
+
     })
 })
