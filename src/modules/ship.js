@@ -1,16 +1,27 @@
-const Ship = (length) => {
+const Ship = (length, dir = 'horizontal') => {
 
     const id = length;
     const shipLength = length;
-
     let shipArr = [];
+
+    //default ship direction is horizontal
+    const direction = dir;
+
+    const changeDirection = () => {
+        if(direction === 'horizontal') {
+            return direction = 'vertical'
+        } else {
+            return direction = 'horizontal'
+        }
+    }
+
+    //pushes to shipArr coord of new ship with number form 1 to ship length
 
     const shipPositions = (shipLength) => {     
         for(let i = 1; i <= shipLength; i++) {
             shipArr.push(`${i}`)
         }
     }
-
     shipPositions(shipLength)
     
     const hit = (num) => {
@@ -28,8 +39,11 @@ const Ship = (length) => {
         id,
         shipLength,
         shipArr,
+        direction,
         hit,
-        isSunk
+        isSunk,
+        changeDirection,
+        
     }
 }
 

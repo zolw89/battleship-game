@@ -16,13 +16,35 @@ const Gameboard = () => {
         return board
     }
 
+    const checkValidShipCords = (ship, row, col) => {
+        let dir = ship.direction;
+        for(let i = 0; i < ship.shipLength; i++) {
+            if(dir === 'horizontal' && board[row][col + i] !== '') {
+                return false
+            }
+            if(dir === 'vertical' && board[row + i][col] !== '') {
+                return false
+            }
+        }
+        return true
+    }
 
     const placeShip = (ship, row, col) => {
-        if(col + ship.length > 10) return alert('cant place there')
-        for(let i = 0; i < ship.shipLength; i++) {
-            board[row][col + i] = { ship, index: ship.shipArr[i] }
+        const isValid = checkValidShipCords(ship, row, col)
+        if(isValid !== true) return alert('cant place there')
+        if(ship.direction === 'horizontal') {
+            if(col + ship.length > 10) return alert('cant place there')
+                for(let i = 0; i < ship.shipLength; i++) {
+                board[row][col + i] = { ship, index: ship.shipArr[i] }
+                }
+            placedShips.push(ship) 
+        } else {
+            if(row + ship.length > 10) return alert('cant place there')
+                for(let i = 0; i < ship.shipLength; i++) {
+                board[row + 1][col] = { ship, index: ship.shipArr[i] }
+                }
+            placedShips.push(ship) 
         }
-        placedShips.push(ship) 
     }
 
     const receiveAttack = (row, col) => {
@@ -43,6 +65,7 @@ const Gameboard = () => {
         placeShip,
         receiveAttack,
         areAllSunk,
+        checkValidShipCords,
         board
     }
     

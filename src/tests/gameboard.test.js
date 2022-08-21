@@ -76,7 +76,11 @@ describe('Gameboard', () => {
             expect(actual).toBe(true)
         })
 
-
+        test('check new ship can be placet at 8,2 coords', () => {
+            let pirates = Ship(4)
+            let actual = gameboard.checkValidShipCords(pirates, 8,1)
+            expect(actual).toBe(false)
+        })
 
     })
 })
