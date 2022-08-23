@@ -16,6 +16,8 @@ const Gameboard = () => {
         return board
     }
 
+    createBoard(10)
+
     const checkValidShipCords = (ship, row, col) => {
         let dir = ship.direction;
         for(let i = 0; i < ship.shipLength; i++) {
@@ -31,15 +33,15 @@ const Gameboard = () => {
 
     const placeShip = (ship, row, col) => {
         const isValid = checkValidShipCords(ship, row, col)
-        if(isValid !== true) return alert('cant place there')
+        if(isValid !== true) return false
         if(ship.direction === 'horizontal') {
-            if(col + ship.length > 10) return alert('cant place there')
+            if(col + ship.length > 10) return false
                 for(let i = 0; i < ship.shipLength; i++) {
                 board[row][col + i] = { ship, index: ship.shipArr[i] }
                 }
             placedShips.push(ship) 
         } else {
-            if(row + ship.length > 10) return alert('cant place there')
+            if(row + ship.length > 10) return false
                 for(let i = 0; i < ship.shipLength; i++) {
                 board[row + 1][col] = { ship, index: ship.shipArr[i] }
                 }

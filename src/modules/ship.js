@@ -15,7 +15,7 @@ const Ship = (length, dir = 'horizontal') => {
         }
     }
 
-    //pushes to shipArr coord of new ship with number form 1 to ship length
+    //pushes to shipArr coord of new ship with number from 1 to ship length
 
     const shipPositions = (shipLength) => {     
         for(let i = 1; i <= shipLength; i++) {

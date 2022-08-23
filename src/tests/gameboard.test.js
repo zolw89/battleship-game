@@ -5,15 +5,14 @@ describe('Gameboard', () => {
     describe('Board', () => {
 
         const gameboard = Gameboard();
-        let gameArray = gameboard.createBoard(10);
 
         test('create gameboard with 10 rows', () => {
-            const actual = gameArray.length;
+            const actual = gameboard.board.length;
             expect(actual).toBe(10)
         })
 
         test('each row should have 10 elements inside', () => {
-            const actual = gameArray[0].length;
+            const actual = gameboard.board[0].length;
             expect(actual).toBe(10)
         })
     })
