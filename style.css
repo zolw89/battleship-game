@@ -1,0 +1,43 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --main-color: rgb(27, 27, 27);
+    --light-color: rgb(190, 190, 190);
+}
+.boards {
+    padding: 50px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.board {
+    width: 417px;
+    height: 417px;
+    background-color: var(--main-color);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+    border: 4px solid var(--main-color);
+    border-radius: 1%;
+}
+
+.board div {
+    width: 40px;
+    height: 40px;
+    border-radius: 5%;
+    background-color: var(--light-color);
+}
+
+#hit {
+    background-color: red;
+}
+
+#missed {
+    background-color: white;
+}
