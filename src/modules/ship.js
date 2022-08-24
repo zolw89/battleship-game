@@ -5,7 +5,13 @@ const Ship = (length, dir = 'horizontal') => {
     let shipArr = [];
 
     //default ship direction is horizontal
-    const direction = dir;
+    let direction = dir;
+
+    const randomDirection = () => {
+        let directions = ['horizontal', 'vertical'];
+        direction = directions[Math.floor(Math.random() * 2)]
+        return direction
+    }
 
     const changeDirection = () => {
         if(direction === 'horizontal') {
@@ -43,6 +49,7 @@ const Ship = (length, dir = 'horizontal') => {
         hit,
         isSunk,
         changeDirection,
+        randomDirection
         
     }
 }

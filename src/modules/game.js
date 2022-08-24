@@ -62,25 +62,26 @@ const Game = () => {
     createFleet(playerShipArray)
     createFleet(computerShipArray)
 
-    console.log(playerShipArray)
-    console.log(computerShipArray)
-
-    const autoPlaceShip = (arr, board) => {
-        arr.forEach(ship => {
+    const autoPlaceShip = (arr, pboard) => {
+        arr.forEach(ship => {   
+            ship.direction = ship.randomDirection()
             let row = Math.floor(Math.random() * 10)
             let col = Math.floor(Math.random() * 10)
-            board.placeShip(ship, row, col)
-            console.log(board.placeShip(ship, row, col))
-            if(board.placeShip(ship, row, col)) {
-                console.log(arr)
-                arr.splice(arr.indexOf(el), 1)
-                console.log(arr)
+            if(pboard.checkValidShipCords(ship, row, col) && pboard.checkSurroundings(ship, row, col)) {
+                pboard.placeShip(ship, row, col)
+                arr.splice(arr.indexOf(ship), 1)
+                }
+            if(!pboard.checkValidShipCords(ship, row, col) || !pboard.checkSurroundings(ship, row, col)) {
+                row = Math.floor(Math.random() * 10)
+                col = Math.floor(Math.random() * 10)
+                autoPlaceShip(arr, pboard)
             }
-            if(!board.placeShip(ship, row, col)) {
             }
-        })
+            
+        )
     }
 
+    autoPlaceShip(playerShipArray, computerBoard)
     autoPlaceShip(computerShipArray, playerBoard)
 
     const createFleetDiv = () => {
@@ -97,12 +98,12 @@ const Game = () => {
 
     
 
-    computerBoard.placeShip(playerShipArray[0], 0,0)
-    computerBoard.placeShip(playerShipArray[1], 4,2)
-    computerBoard.placeShip(playerShipArray[2], 5,5)
-    computerBoard.placeShip(playerShipArray[3], 6,2)
-    computerBoard.placeShip(playerShipArray[4], 9,6)
-    computerBoard.placeShip(playerShipArray[5], 2,2)
+    // playerBoard.placeShip(computerShipArray[0], 0,0)
+    // playerBoard.placeShip(computerShipArray[1], 4,2)
+    // playerBoard.placeShip(computerShipArray[2], 5,5)
+    // playerBoard.placeShip(computerShipArray[3], 6,2)
+    // playerBoard.placeShip(computerShipArray[4], 9,6)
+    // playerBoard.placeShip(computerShipArray[5], 2,2)
 
     for(let i = 0; i < 10; i++) {
         for(let j = 0; j < 10; j++) {
@@ -138,21 +139,22 @@ const Game = () => {
             } else {
                 e.target.setAttribute('id','missed')
                 e.target.classList.add('attacked')
+                nextMoveFlag = false
+                setTimeout(() => {randomCompAtt()}, 600)
             }
-            nextMoveFlag = false
-            setTimeout(() => {randomCompAtt()}, 600)
+            
         }
     })
 
 
     const randomCompAtt = () => {
         let coords = playerTwo.randomAttack(playerBoard)
-        console.log(coords)
         let arr = Array.from(playerBoardDiv.querySelectorAll('.cell'))
         if(playerBoard.board[coords.row][coords.col] === 'hit') {
             arr.forEach(el => {
                 if(el.dataset.row == coords.row && el.dataset.col == coords.col) {
                     el.setAttribute('id', 'hit')
+                    setTimeout(() => {randomCompAtt()}, 600)
                     if(playerBoard.areAllSunk()) {
                         el.setAttribute('id', 'hit')
                         console.log('you lose')
@@ -165,17 +167,11 @@ const Game = () => {
             arr.forEach(el => {
                 if(el.dataset.row == coords.row && el.dataset.col == coords.col) {
                     el.setAttribute('id', 'missed')
+                    nextMoveFlag = true 
                 }
             })
         }
-        nextMoveFlag = true    
     }
-
-
-    console.log(playerBoard.placedShips)
-    console.log(computerBoard.placedShips)
-    console.log(playerBoard.board)
-    console.log(computerBoard.board)
 }
 
 export default Game

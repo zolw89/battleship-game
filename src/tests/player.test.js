@@ -5,8 +5,8 @@ import Player from "../modules/player";
 
 describe('Player', () => {
     const playerBoard = Gameboard();
-    playerBoard.createBoard(10);
     const player = Player('human')
+    let submarine = Ship(3)
 
     describe('Player type', () => {
         test('player type should be human', () => {
@@ -27,10 +27,9 @@ describe('Player', () => {
             expect(actual).toBe('miss')
         })
         test('attack coords with ship should be hit', () => {
-            let cruiser = Ship(3)
-            playerBoard.placeShip(cruiser, 8,3)
-            player.attack(playerBoard, 8, 4)
-            const actual = playerBoard.board[8][4]
+            playerBoard.placeShip(submarine, 8,3)
+            player.attack(playerBoard, 8, 3)
+            const actual = playerBoard.board[8][3]
             expect(actual).toBe('hit')
             const notHit = playerBoard.board[8][6]
             expect(notHit).toBe('')

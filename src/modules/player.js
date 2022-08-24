@@ -2,7 +2,10 @@ const Player = (type) => {
 
     let playerType = type
 
-    const attack = (enemyBoard, row, col) => enemyBoard.receiveAttack(row, col);
+    const attack = (enemyBoard, row, col) => {
+        console.log(enemyBoard.board)
+        enemyBoard.receiveAttack(row, col)
+    };
 
     const randomCoord = (size = 10) => Math.floor(Math.random() * size)
 

@@ -19,7 +19,6 @@ describe('Gameboard', () => {
 
     describe('Place ship and receive attack', () => {
         const gameboard = Gameboard();
-        gameboard.createBoard(10)
 
         let cruiser = Ship(3)
 
