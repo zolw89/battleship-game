@@ -21,10 +21,10 @@ const Gameboard = () => {
     const checkValidShipCords = (ship, row, col) => {
         let dir = ship.direction;
         for(let i = 0; i < ship.shipLength; i++) {
-            if(dir === 'horizontal' && board[row][col + i] !== '') {
+            if((dir === 'horizontal' && board[row][col + i] !== '' ) || (dir === 'horizontal' && col + ship.ShipLength > 10)) {
                 return false
             }
-            if(dir === 'vertical' && board[row + i][col] !== '') {
+            if((dir === 'vertical' && board[row + i][col] !== '') || (dir === 'vertical' && row + ship.ShipLength > 10)) {
                 return false
             }
         }
@@ -35,17 +35,15 @@ const Gameboard = () => {
         const isValid = checkValidShipCords(ship, row, col)
         if(isValid !== true) return false
         if(ship.direction === 'horizontal') {
-            if(col + ship.length > 10) return false
-                for(let i = 0; i < ship.shipLength; i++) {
-                board[row][col + i] = { ship, index: ship.shipArr[i] }
-                }
-            placedShips.push(ship) 
+            for(let i = 0; i < ship.shipLength; i++) {
+            board[row][col + i] = { ship, index: ship.shipArr[i] }
+            }
+        placedShips.push(ship) 
         } else {
-            if(row + ship.length > 10) return false
-                for(let i = 0; i < ship.shipLength; i++) {
-                board[row + 1][col] = { ship, index: ship.shipArr[i] }
-                }
-            placedShips.push(ship) 
+            for(let i = 0; i < ship.shipLength; i++) {
+            board[row + 1][col] = { ship, index: ship.shipArr[i] }
+            }
+        placedShips.push(ship) 
         }
     }
 
@@ -68,6 +66,7 @@ const Gameboard = () => {
         receiveAttack,
         areAllSunk,
         checkValidShipCords,
+        placedShips,
         board
     }
     

@@ -61,14 +61,14 @@ describe('Gameboard', () => {
 
         })
 
-        test('check if we add another ship without all hit, all are sunk should be true', () => {
+        test('check if we add another ship without any hit, all are sunk should be false', () => {
             let destroyer = Ship(2)
             gameboard.placeShip(destroyer, 8, 2)
             let actual = gameboard.areAllSunk()
             expect(actual).toBe(false)
         })
 
-        test('check if we add another ship without any hits, all are sunk should be false', () => {
+        test('check if we add another ship with all hits, all are sunk should be true', () => {
             gameboard.receiveAttack(8,2)
             gameboard.receiveAttack(8,3)
             let actual = gameboard.areAllSunk()

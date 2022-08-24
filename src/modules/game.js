@@ -25,10 +25,13 @@ const Game = () => {
     createPlayersBoard(playerBoardDiv)
     createPlayersBoard(computerBoardDiv)
 
+    const playerBoard = Gameboard()
+    const computerBoard = Gameboard()
+
     const newShipsArr = [
         {
-        name: 'battleship',
-        length: 5,
+            name: 'battleship',
+            length: 5,
         }, {
             name: 'carrier',
             length: 4
@@ -41,17 +44,46 @@ const Game = () => {
         }, {
             name: 'submarine',
             length: 2
+        }, {
+            name: 'gunboat',
+            length: 2
         }
     ]
 
-    const battleship = Ship(5)
-    const carrier = Ship(4)
-    const cruiser = Ship(3)
-    const destroyer = Ship(3)
-    const submarine = Ship(2)
+    const playerShipArray = []
+    const computerShipArray = []
 
+    const createFleet = (board) => {
+        newShipsArr.forEach(el => {
+            board.push(Ship(el.length))
+        })
+    }
 
-    const createFleet = () => {
+    createFleet(playerShipArray)
+    createFleet(computerShipArray)
+
+    console.log(playerShipArray)
+    console.log(computerShipArray)
+
+    const autoPlaceShip = (arr, board) => {
+        arr.forEach(ship => {
+            let row = Math.floor(Math.random() * 10)
+            let col = Math.floor(Math.random() * 10)
+            board.placeShip(ship, row, col)
+            console.log(board.placeShip(ship, row, col))
+            if(board.placeShip(ship, row, col)) {
+                console.log(arr)
+                arr.splice(arr.indexOf(el), 1)
+                console.log(arr)
+            }
+            if(!board.placeShip(ship, row, col)) {
+            }
+        })
+    }
+
+    autoPlaceShip(computerShipArray, playerBoard)
+
+    const createFleetDiv = () => {
         for(let i = 0; i < 5; i++) {
             for(let j = 0; j < 5; j++) {
                 const cell = document.createElement('div')
@@ -61,22 +93,30 @@ const Game = () => {
             }
         }
     }
-    createFleet()
+    createFleetDiv()
 
-    const playerBoard = Gameboard()
-    const computerBoard = Gameboard()
+    
 
-    playerBoard.placeShip(battleship, 3,0)
-    playerBoard.placeShip(cruiser, 5,2)
-    playerBoard.placeShip(carrier, 1,5)
-    playerBoard.placeShip(destroyer, 6,7)
-    playerBoard.placeShip(submarine, 9,4)
+    computerBoard.placeShip(playerShipArray[0], 0,0)
+    computerBoard.placeShip(playerShipArray[1], 4,2)
+    computerBoard.placeShip(playerShipArray[2], 5,5)
+    computerBoard.placeShip(playerShipArray[3], 6,2)
+    computerBoard.placeShip(playerShipArray[4], 9,6)
+    computerBoard.placeShip(playerShipArray[5], 2,2)
 
-    computerBoard.placeShip(battleship, 0,0)
-    computerBoard.placeShip(cruiser, 4,2)
-    computerBoard.placeShip(carrier, 5,5)
-    computerBoard.placeShip(destroyer, 6,2)
-    computerBoard.placeShip(submarine, 9,6)
+    for(let i = 0; i < 10; i++) {
+        for(let j = 0; j < 10; j++) {
+            if(playerBoard.board[i][j] !== '') {
+                let arr = Array.from(playerBoardDiv.querySelectorAll('.cell'));
+                arr.forEach(el => {
+                    if(el.dataset.row == i && el.dataset.col == j) {
+                        el.classList.add('ship')
+                    }
+                })
+
+            }
+        }
+    }
 
     let nextMoveFlag = true;
 
@@ -90,13 +130,17 @@ const Game = () => {
             if(computerBoard.board[row][col] === 'hit') {
                 e.target.setAttribute('id', 'hit')
                 e.target.classList.add('attacked')
+                if(computerBoard.areAllSunk()) {             
+                    console.log('you win')
+                    nextMoveFlag = false
+                    return
+                }
             } else {
                 e.target.setAttribute('id','missed')
                 e.target.classList.add('attacked')
             }
             nextMoveFlag = false
-            // setTimeout(() => {randomCompAtt()}, 600)
-            randomCompAtt()
+            setTimeout(() => {randomCompAtt()}, 600)
         }
     })
 
@@ -109,6 +153,11 @@ const Game = () => {
             arr.forEach(el => {
                 if(el.dataset.row == coords.row && el.dataset.col == coords.col) {
                     el.setAttribute('id', 'hit')
+                    if(playerBoard.areAllSunk()) {
+                        el.setAttribute('id', 'hit')
+                        console.log('you lose')
+                        return
+                    }
                 }
             })
                 
@@ -123,7 +172,8 @@ const Game = () => {
     }
 
 
-
+    console.log(playerBoard.placedShips)
+    console.log(computerBoard.placedShips)
     console.log(playerBoard.board)
     console.log(computerBoard.board)
 }
