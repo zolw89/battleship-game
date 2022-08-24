@@ -7,6 +7,7 @@
 :root {
     --main-color: rgb(27, 27, 27);
     --light-color: rgb(190, 190, 190);
+    --water: rgb(92, 182, 255);
 }
 .boards {
     padding: 50px 20px;
@@ -27,11 +28,11 @@
     border-radius: 1%;
 }
 
-.board div {
+.cell {
     width: 40px;
     height: 40px;
     border-radius: 5%;
-    background-color: var(--light-color);
+    background-color: var(--water);
 }
 
 #hit {
@@ -39,5 +40,9 @@
 }
 
 #missed {
-    background-color: white;
+    background-color: var(--light-color);
+}
+
+.ship {
+    background-color: rgb(110, 0, 0);
 }
