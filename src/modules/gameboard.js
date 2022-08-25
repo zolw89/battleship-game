@@ -36,56 +36,94 @@ const Gameboard = () => {
 
     const checkSurroundings = (ship, row, col) => {
         let dir = ship.direction
+        let cells = (ship.shipLength + 2) * 3;
+        let counter = 0
         if(dir === 'horizontal') {
-            let cells = (ship.shipLength + 2) * 3;
-            let counter = 0
+            if((row - 1 < 0 || row + 1 > 9) && (col -1  >= 0 || col + ship.shipLength <= 9)) {
+                counter +=(ship.shipLength+2)
+
+                if(row - 1 < 0) {
+                    console.log('jestem horiz przy gorze')
+                    for(let i = 0; i < 2; i++) {
+                        for(let j = -1; j <= ship.shipLength; j++) {
+                            if(board[row + i][col + j] === '') {
+                                
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+                if(row + 1 > 9) {
+                    console.log('jestem horiz przy dole')
+                    for(let i = - 1; i < 1; i++) {
+                        for(let j = -1; j <= ship.shipLength; j++) {
+                            if(board[row + i][col + j] === '') {
+                                
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+                console.log(counter)
+            } else if((col - 1 < 0 || col + ship.shipLength > 9) && (row - 1 >= 0 || row + 1 <= 9)){
+                
+                counter +=3
+                console.log('jestem horiz przy prawo/lewo')
+                console.log(counter)
+            } else if((row - 1 < 0 || row + 1 > 9) && (col - 1 < 0 || col + ship.shipLength > 9)) {
+                
+                counter += (ship.shipLength+4)
+                console.log('jestem horiz przy kat')
+                console.log(counter)
+            } else {
+                console.log('jestem horiz w srodku')
+            }
             for(let i = -1; i < 2; i++) {
                 for(let j = -1; j <= ship.shipLength; j++) {
-                    if((row + i < 0 || row + i > 9) && (col + j >= 0 || col + j <= 9)) {
-                        counter +=(ship.shipLength+2)
-                        break
-                    }
-                    if((col + j < 0 || col + j > 9) && (row + i >= 0 || row + i <= 9)){
-                        counter +=3
-                        break
-                    }
-                    if((row + i < 0 || row + i > 9) && (col + j < 0 || col + j > 9)) {
-                        counter += (ship.shipLength+4)
-                        break
-                    }
                     if(board[row + i][col + j] === '') {
+                        
                         counter++
+                        console.log('jestem horiz w srodku')
+                        console.log(counter)
                     } 
                 }
-            }           
+            }
+            console.log(counter)           
             if(cells !== counter) return false
         }
 
         if(dir === 'vertical') {
-
-            let cells = (ship.shipLength + 2) * 3;
-            let counter = 0
+            if((row - 1 < 0 || row + ship.shipLength > 9) && (col - 1 >= 0 || col + 1 <= 9)) {
+                counter += 3 
+                console.log('jestem vertical przy gora/dol')
+                console.log(counter)
+            }
+            if((col - 1 < 0 || col + 1 > 9) && (row - 1 >= 0 || row + ship.shipLength <= 9)) {
+                counter += (ship.shipLength + 2)
+                console.log('jestem vertical przy prawo/lewo')
+                console.log(counter)
+            }
+            if((row - 1 < 0 || row + ship.shipLength > 9) && (col - 1 < 0 || col + 1 > 9)) {
+                counter += (ship.shipLength+4)
+                console.log('jestem vertical przy kat')
+                console.log(counter)
+            }
             for(let i = -1; i <= ship.shipLength; i++) {
                 for(let j = -1; j < 2; j++) {
-                    if((row + i < 0 || row + i > 9) && (col + j >= 0 || col + j <= 9)) {
-                        counter += 3 
-                        break
-                    }
-                    if((col + j < 0 || col + j > 9) && (row + i >= 0 || row + i <= 9)) {
-                        counter += (ship.shipLength + 2)
-                        break
-                    }
-                    if((row + i < 0 || row + i > 9) && (col + j < 0 || col + j > 9)) {
-                        counter += (ship.shipLength+4)
-                        break
-                    }
                     if(board[row + i][col + j] === '') {
+                        
                         counter++
+                        console.log('jestem vertical w srodku')
+                        console.log(counter)
                     } 
                 }
             }
+            console.log(counter)
             if(cells !== counter) return false
         }
+
         return true
     }    
 

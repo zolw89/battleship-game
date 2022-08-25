@@ -120,6 +120,10 @@ const Game = () => {
         }
     }
 
+    playerBoard.placeShip(computerShipArray[0], 9, 9)
+    renderPlayerBoard()
+    console.log(playerBoard.board)
+
     autoPlaceBtn.addEventListener('click', () => {
         resetBoard()
         autoPlaceShip(computerShipArray, playerBoard);
