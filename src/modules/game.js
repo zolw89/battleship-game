@@ -6,6 +6,10 @@ const Game = () => {
     const playerBoardDiv = document.querySelector('.player-board')
     const computerBoardDiv = document.querySelector('.computer-board')
     const fleetDiv = document.querySelector('.fleet')
+    const autoPlaceBtn = document.querySelector('.auto-place')
+    const resetBtn = document.querySelector('.reset')
+    const playerFleetDiv = document.querySelector('.fleet-div')
+    const startGameBtn = document.querySelector('.start-game-btn')
 
     const playerOne = Player('human')
     const playerTwo = Player('computer')
@@ -25,7 +29,7 @@ const Game = () => {
     createPlayersBoard(playerBoardDiv)
     createPlayersBoard(computerBoardDiv)
 
-    const playerBoard = Gameboard()
+    let playerBoard = Gameboard()
     const computerBoard = Gameboard()
 
     const newShipsArr = [
@@ -51,7 +55,7 @@ const Game = () => {
     ]
 
     const playerShipArray = []
-    const computerShipArray = []
+    let computerShipArray = []
 
     //create fleet for each player with 6 ships from newShipArr
 
@@ -86,7 +90,6 @@ const Game = () => {
     }
 
     autoPlaceShip(playerShipArray, computerBoard)
-    autoPlaceShip(computerShipArray, playerBoard)
 
     const createFleetDiv = () => {
         for(let i = 0; i < 5; i++) {
@@ -94,25 +97,52 @@ const Game = () => {
                 const cell = document.createElement('div')
                 cell.dataset.x = i;
                 cell.dataset.y = j;
+                cell.classList.add('cell')
                 fleetDiv.appendChild(cell)
             }
         }
     }
     createFleetDiv()
 
-    for(let i = 0; i < 10; i++) {
-        for(let j = 0; j < 10; j++) {
-            if(playerBoard.board[i][j] !== '') {
-                let arr = Array.from(playerBoardDiv.querySelectorAll('.cell'));
-                arr.forEach(el => {
-                    if(el.dataset.row == i && el.dataset.col == j) {
-                        el.classList.add('ship')
-                    }
-                })
-
+    const renderPlayerBoard = () => {
+        for(let i = 0; i < 10; i++) {
+            for(let j = 0; j < 10; j++) {
+                if(playerBoard.board[i][j] !== '') {
+                    let arr = Array.from(playerBoardDiv.querySelectorAll('.cell'));
+                    arr.forEach(el => {
+                        if(el.dataset.row == i && el.dataset.col == j) {
+                            el.classList.add('ship')
+                        }
+                    })
+    
+                }
             }
         }
     }
+
+    autoPlaceBtn.addEventListener('click', () => {
+        resetBoard()
+        autoPlaceShip(computerShipArray, playerBoard);
+        renderPlayerBoard()
+        
+    })
+
+    const resetBoard = () => {
+        playerBoard = Gameboard()
+        computerShipArray = []
+        createFleet(computerShipArray)
+        playerBoardDiv.innerHTML = ''
+        createPlayersBoard(playerBoardDiv)
+    }
+
+    resetBtn.addEventListener('click', resetBoard)
+
+    startGameBtn.addEventListener('click', () => {
+        if(playerBoard.placedShips.length !== 6) return alert('place all ships first')
+        playerFleetDiv.classList.add('hide')
+        computerBoardDiv.classList.remove('hide')
+    })
+
 
     let nextMoveFlag = true;
 

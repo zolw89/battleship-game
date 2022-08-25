@@ -1,10 +1,12 @@
+import Ship from "./ship"
+
 const Gameboard = () => {
 
     //CREATE BOARD (NUM X NUM)
 
     let board = []
 
-    const placedShips = []
+    let placedShips = []
 
     const createBoard = (num) => {
         for(let i = 0; i < num; i++) {
@@ -17,6 +19,7 @@ const Gameboard = () => {
     }
 
     createBoard(10)
+
 
     //check if there is valid position on board for ship
 
@@ -57,7 +60,7 @@ const Gameboard = () => {
             }           
             if(cells !== counter) return false
         }
-        
+
         if(dir === 'vertical') {
 
             let cells = (ship.shipLength + 2) * 3;
@@ -109,16 +112,16 @@ const Gameboard = () => {
     }
 
     //attack board and check if shoot have missed or hit
+    
 
     const receiveAttack = (row, col) => {
         if(board[row][col] === '') {
             return board[row][col] = 'miss'
         } else if(board[row][col].ship) {
             board[row][col].ship.hit(board[row][col].index);
-            board[row][col] = 'hit'
-            
+            // board[row][col].ship.isSunk() -- check if ship is sunk after each attack
+            board[row][col] = 'hit'           
         }
-        return board[row][col]
     }
 
     //check if all ships are still alive or dead
@@ -133,7 +136,7 @@ const Gameboard = () => {
         checkValidShipCords,
         placedShips,
         board,
-        checkSurroundings
+        checkSurroundings,
     }
     
 }
