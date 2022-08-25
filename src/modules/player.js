@@ -3,7 +3,6 @@ const Player = (type) => {
     let playerType = type
 
     const attack = (enemyBoard, row, col) => {
-        console.log(enemyBoard.board)
         enemyBoard.receiveAttack(row, col)
     };
 

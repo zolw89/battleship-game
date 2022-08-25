@@ -18,6 +18,8 @@ const Gameboard = () => {
 
     createBoard(10)
 
+    //check if there is valid position on board for ship
+
     const checkValidShipCords = (ship, row, col) => {
         let dir = ship.direction;
         for(let i = 0; i < ship.shipLength; i++) {
@@ -27,70 +29,69 @@ const Gameboard = () => {
         return true
     }
 
+    //check if there is 1 row and 1 col space between ships
+
     const checkSurroundings = (ship, row, col) => {
-        console.log('sprawdzam '+ row + ' '+ col)
-        let dir = ship.direction;
+        let dir = ship.direction
         if(dir === 'horizontal') {
-            for(let i = 0; i < ship.shipLength; i++) {
-                if(row == 0 && col == 0) {
-                    console.log('sprawdzam gorna lewa krawedz')
-                    if(typeof board[row + 1][col + i] === 'object' || typeof board[row][col + ship.shipLength] === 'object' || typeof board[row+1][col + ship.shipLength])
-                    return false
+            let cells = (ship.shipLength + 2) * 3;
+            let counter = 0
+            for(let i = -1; i < 2; i++) {
+                for(let j = -1; j <= ship.shipLength; j++) {
+                    if((row + i < 0 || row + i > 9) && (col + j >= 0 || col + j <= 9)) {
+                        counter +=(ship.shipLength+2)
+                        break
+                    }
+                    if((col + j < 0 || col + j > 9) && (row + i >= 0 || row + i <= 9)){
+                        counter +=3
+                        break
+                    }
+                    if((row + i < 0 || row + i > 9) && (col + j < 0 || col + j > 9)) {
+                        counter += (ship.shipLength+4)
+                        break
+                    }
+                    if(board[row + i][col + j] === '') {
+                        counter++
+                    } 
                 }
-
-                if(row == 0 && col + ship.shipLength == 9) {
-                    console.log('sprawdzam gorna prawa krawedz')
-                    if(typeof board[row + 1][col + i] == 'object' || typeof board[row][col - 1] === 'object' || typeof board[row + 1][col - 1]) 
-                    return false
-                }
-
-                if(row == 9 && col == 0) {
-                    console.log('sprawdzam dolna lewa krawedz')
-                    if(typeof board[row - 1][col + 1] === 'object' || typeof board[row][col + ship.shipLength] === 'object' || typeof board[row-1][col + ship.shipLength])
-                    return false
-                }
-
-                if(row == 9 && col + ship.shipLength == 9) {
-                    console.log('sprawdzam dolna prawa krawedz')
-                    if(typeof board[row - 1][col + i] == 'object' || typeof board[row][col - 1] === 'object' || typeof board[row - 1][col - 1])
-                    return false
-                }
-                if((row > 0 && row + ship.shipLength < 9) && (col > 0 && col + ship.shipLength < 9))
-
-
-                if(col + i > 8 || col - i < 0) {
-                    console.log('poszlo 1 test')
-                    return false}
-                if((typeof board[row+1][col+i] === 'object' || typeof board[row - 1][col+i] === 'object') ||
-                   (typeof board[row+1][col-1] === 'object' || typeof board[row - 1][col-1] === 'object' || typeof board[row][col-1] === 'object') ||
-                   (typeof board[row+1][col+ship.shipLength] !== 'object' || typeof board[row - 1][col+ship.shipLength] !== 'object' || typeof board[row][col+ship.shipLength] !== 'object')) {
-                    console.log(row, col)
-                    console.log('nie moge stawiac')
-                    return false
-                }
-            }
+            }           
+            if(cells !== counter) return false
         }
-        if(dir === "vertical") {
-            for(let i = 0; i < ship.shipLength; i++) {
-                if(col - 1 < 0 || col + 1 > 8) return false
-                if(row + i > 8 || row - i < 0) return false
-                if((typeof board[row + i][col + 1] === 'object' || typeof board[row + i][col - 1] === 'object') ||
-                   (typeof board[row-1][col+1] === 'object' || typeof board[row - 1][col-1] === 'object' || typeof board[row - 1][col] === 'object') ||
-                   (typeof board[row+ship.shipLength][col+1] !== 'object' || typeof board[row + ship.shipLength][col-1] !== 'object' || typeof board[row][col+ship.shipLength] !== 'object')) {
-                    console.log('nie moge stawiac')
-                    return false
-                }
-            }
-        }
-        console.log('moge stawiac')
-        return true
         
-    }
+        if(dir === 'vertical') {
+
+            let cells = (ship.shipLength + 2) * 3;
+            let counter = 0
+            for(let i = -1; i <= ship.shipLength; i++) {
+                for(let j = -1; j < 2; j++) {
+                    if((row + i < 0 || row + i > 9) && (col + j >= 0 || col + j <= 9)) {
+                        counter += 3 
+                        break
+                    }
+                    if((col + j < 0 || col + j > 9) && (row + i >= 0 || row + i <= 9)) {
+                        counter += (ship.shipLength + 2)
+                        break
+                    }
+                    if((row + i < 0 || row + i > 9) && (col + j < 0 || col + j > 9)) {
+                        counter += (ship.shipLength+4)
+                        break
+                    }
+                    if(board[row + i][col + j] === '') {
+                        counter++
+                    } 
+                }
+            }
+            if(cells !== counter) return false
+        }
+        return true
+    }    
+
+
+    //place ship at given coords(row, col)
 
     const placeShip = (ship, row, col) => {
         const isValid = checkValidShipCords(ship, row, col)
         const surroundings = checkSurroundings(ship, row, col)
-        console.log(surroundings)
         if(isValid == true && surroundings == true) {
             if(ship.direction === 'horizontal') {
                 for(let i = 0; i < ship.shipLength; i++) {
@@ -107,6 +108,8 @@ const Gameboard = () => {
         } else return false
     }
 
+    //attack board and check if shoot have missed or hit
+
     const receiveAttack = (row, col) => {
         if(board[row][col] === '') {
             return board[row][col] = 'miss'
@@ -117,6 +120,8 @@ const Gameboard = () => {
         }
         return board[row][col]
     }
+
+    //check if all ships are still alive or dead
 
     const areAllSunk = () => placedShips.every((ship) => ship.isSunk());
 

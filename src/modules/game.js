@@ -53,6 +53,8 @@ const Game = () => {
     const playerShipArray = []
     const computerShipArray = []
 
+    //create fleet for each player with 6 ships from newShipArr
+
     const createFleet = (board) => {
         newShipsArr.forEach(el => {
             board.push(Ship(el.length))
@@ -61,6 +63,8 @@ const Game = () => {
 
     createFleet(playerShipArray)
     createFleet(computerShipArray)
+
+    //auto place ships on board
 
     const autoPlaceShip = (arr, pboard) => {
         arr.forEach(ship => {   
@@ -95,15 +99,6 @@ const Game = () => {
         }
     }
     createFleetDiv()
-
-    
-
-    // playerBoard.placeShip(computerShipArray[0], 0,0)
-    // playerBoard.placeShip(computerShipArray[1], 4,2)
-    // playerBoard.placeShip(computerShipArray[2], 5,5)
-    // playerBoard.placeShip(computerShipArray[3], 6,2)
-    // playerBoard.placeShip(computerShipArray[4], 9,6)
-    // playerBoard.placeShip(computerShipArray[5], 2,2)
 
     for(let i = 0; i < 10; i++) {
         for(let j = 0; j < 10; j++) {
