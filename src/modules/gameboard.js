@@ -67,29 +67,92 @@ const Gameboard = () => {
                     }
                 }
                 console.log(counter)
-            } else if((col - 1 < 0 || col + ship.shipLength > 9) && (row - 1 >= 0 || row + 1 <= 9)){
-                
+            } else if((col - 1 < 0 || col + ship.shipLength > 9) && (row - 1 >= 0 || row + 1 <= 9)){    
                 counter +=3
-                console.log('jestem horiz przy prawo/lewo')
+
+                if(col - 1 < 0) {
+                    console.log('jestem horiz przy lewo')
+                    for(let i = -1; i < 2; i++) {
+                        for(let j = 0; j <= ship.shipLength; j++) {
+                            if(board[row + i][col + j] === '') {    
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+                if(col + ship.shipLength > 9) {
+                    console.log('jestem horiz przy prawo')
+                    for(let i = -1; i < 2; i++) {
+                        for(let j = -1; j < ship.shipLength; j++) {
+                            if(board[row + i][col + j] === '') {    
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }           
                 console.log(counter)
             } else if((row - 1 < 0 || row + 1 > 9) && (col - 1 < 0 || col + ship.shipLength > 9)) {
-                
                 counter += (ship.shipLength+4)
-                console.log('jestem horiz przy kat')
+                if(row - 1 < 0 && col - 1 < 0) {
+                    console.log('jestem horiz przy lewo gora')
+                    for(let i = 0; i < 2; i++) {
+                        for(let j = 0; j <= ship.shipLength; j++) {
+                            if(board[row + i][col + j] === '') {   
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+                if(row - 1 < 0 && col + ship.shipLength > 9) {
+                    console.log('jestem horiz gora lewo')
+                    for(let i = 0; i < 2; i++) {
+                        for(let j = -1; j < ship.shipLength; j++) {
+                            if(board[row + i][col + j] === '') {       
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+                if(row + 1 > 9 && col - 1 < 0) {
+                    console.log('jestem horiz przy dol lewo')
+                    for(let i = -1; i < 1; i++) {
+                        for(let j = 0; j <= ship.shipLength; j++) {
+                            if(board[row + i][col + j] === '') {  
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+                if(row + 1 > 9 && col + ship.shipLength > 9) {
+                    console.log('jestem horiz przy dol prawo')
+                    for(let i = -1; i < 1; i++) {
+                        for(let j = -1; j < ship.shipLength; j++) {
+                            if(board[row + i][col + j] === '') {  
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
                 console.log(counter)
+                
             } else {
                 console.log('jestem horiz w srodku')
-            }
-            for(let i = -1; i < 2; i++) {
-                for(let j = -1; j <= ship.shipLength; j++) {
-                    if(board[row + i][col + j] === '') {
-                        
-                        counter++
-                        console.log('jestem horiz w srodku')
-                        console.log(counter)
+                for(let i = -1; i < 2; i++) {
+                    for(let j = -1; j <= ship.shipLength; j++) {
+                        if(board[row + i][col + j] === '') {
+                            counter++
+                            console.log(counter)
+                        }                         
+                            
                     } 
                 }
-            }
+            }     
             console.log(counter)           
             if(cells !== counter) return false
         }
@@ -97,27 +160,107 @@ const Gameboard = () => {
         if(dir === 'vertical') {
             if((row - 1 < 0 || row + ship.shipLength > 9) && (col - 1 >= 0 || col + 1 <= 9)) {
                 counter += 3 
-                console.log('jestem vertical przy gora/dol')
-                console.log(counter)
-            }
-            if((col - 1 < 0 || col + 1 > 9) && (row - 1 >= 0 || row + ship.shipLength <= 9)) {
+                if(row - 1 < 0) {
+                    console.log('jestem vertical przy gora')
+                    for(let i = 0; i <= ship.shipLength; i++) {
+                        for(let j = -1; j < 2; j++) {
+                            if(board[row + i][col + j] === '') {  
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+                if(row + ship.shipLength > 9) {
+                    console.log('jestem vertical przy dol')
+                    for(let i = -1; i < ship.shipLength; i++) {
+                        for(let j = -1; j < 2; j++) {
+                            if(board[row + i][col + j] === '') {  
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+            } else if((col - 1 < 0 || col + 1 > 9) && (row - 1 >= 0 || row + ship.shipLength <= 9)) {
                 counter += (ship.shipLength + 2)
-                console.log('jestem vertical przy prawo/lewo')
-                console.log(counter)
-            }
-            if((row - 1 < 0 || row + ship.shipLength > 9) && (col - 1 < 0 || col + 1 > 9)) {
+                if(col - 1 < 0) {
+                    console.log('jestem vertical przy lewo')
+                    for(let i = - 1; i <= ship.shipLength; i++) {
+                        for(let j = 0; j < 2; j++) {
+                            if(board[row + i][col + j] === '') {  
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+                if(col + 1 > 9) {
+                    console.log('jestem vertical przy prawo')
+                    for(let i = -1; i <= ship.shipLength; i++) {
+                        for(let j = -1; j < 1; j++) {
+                            if(board[row + i][col + j] === '') {  
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+            } else if((row - 1 < 0 || row + ship.shipLength > 9) && (col - 1 < 0 || col + 1 > 9)) {
                 counter += (ship.shipLength+4)
-                console.log('jestem vertical przy kat')
-                console.log(counter)
-            }
-            for(let i = -1; i <= ship.shipLength; i++) {
-                for(let j = -1; j < 2; j++) {
-                    if(board[row + i][col + j] === '') {
-                        
-                        counter++
-                        console.log('jestem vertical w srodku')
-                        console.log(counter)
-                    } 
+                if(row - 1 < 0 && col - 1 < 0) {
+                    console.log('jestem vertical przy gora lewo')
+                    for(let i = 0; i <= ship.shipLength; i++) {
+                        for(let j = 0; j < 2; j++) {
+                            if(board[row + i][col + j] === '') {  
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+                if(row - 1 < 0 && col + 1 > 9) {
+                    console.log('jestem vertical przy gora prawo')
+                    for(let i = 0; i <= ship.shipLength; i++) {
+                        for(let j = -1; j < 1; j++) {
+                            if(board[row + i][col + j] === '') {  
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+                if(row + ship.shipLength > 9 && col - 1 < 0) {
+                    console.log('jestem vertical przy dol lewo')
+                    for(let i = -1; i < ship.shipLength; i++) {
+                        for(let j = 0; j < 2; j++) {
+                            if(board[row + i][col + j] === '') {  
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+                if(row + ship.shipLength > 9 && col + 1 > 9) {
+                    console.log('jestem vertical przy dol prawo')
+                    for(let i = -1; i < ship.shipLength; i++) {
+                        for(let j = -1; j < 1; j++) {
+                            if(board[row + i][col + j] === '') {  
+                                counter++
+                                console.log(counter)
+                            } 
+                        }
+                    }
+                }
+            } else {
+                console.log('jestem vertical w srodku')
+                for(let i = -1; i <= ship.shipLength; i++) {
+                    for(let j = -1; j < 2; j++) {
+                        if(board[row + i][col + j] === '') {
+                            counter++
+                            console.log(counter)
+                        } 
+                    }
                 }
             }
             console.log(counter)
