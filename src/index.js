@@ -1,13 +1,11 @@
-import Game from "./modules/game"
+import Game from "./modules/game";
 
-Game()
+Game();
 
-const newGameBtn = document.querySelector('.new-game')
-const newGameScreen = document.querySelector('.restart-screen')
+const newGameBtn = document.querySelector(".new-game");
+const newGameScreen = document.querySelector(".restart-screen");
 
-newGameBtn.addEventListener('click', () => {
-    newGameScreen.classList.add('hide')
-    Game()
-})
-
-
+newGameBtn.addEventListener("click", () => {
+  newGameScreen.classList.add("hide");
+  Game();
+});

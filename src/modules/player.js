@@ -1,35 +1,37 @@
 const Player = (type) => {
+  let playerType = type;
 
-    let playerType = type
+  const attack = (enemyBoard, row, col) => {
+    enemyBoard.receiveAttack(row, col);
+  };
 
-    const attack = (enemyBoard, row, col) => {
-        enemyBoard.receiveAttack(row, col)
-    };
+  const randomCoord = (size = 10) => Math.floor(Math.random() * size);
 
-    const randomCoord = (size = 10) => Math.floor(Math.random() * size)
+  let coords;
 
-    let coords;
-
-    const randomAttack = (enemyBoard) => {
-        let row = randomCoord();
-        let col = randomCoord(); 
-        if(enemyBoard.board[row][col] === 'hit' || enemyBoard.board[row][col] === 'miss') {
-            randomAttack(enemyBoard) 
-        } else {     
-            enemyBoard.receiveAttack(row, col) 
-            coords = {row, col}
-            return coords
-        }
-        return coords
+  const randomAttack = (enemyBoard) => {
+    let row = randomCoord();
+    let col = randomCoord();
+    if (
+      enemyBoard.board[row][col] === "hit" ||
+      enemyBoard.board[row][col] === "miss"
+    ) {
+      randomAttack(enemyBoard);
+    } else {
+      enemyBoard.receiveAttack(row, col);
+      coords = { row, col };
+      return coords;
     }
+    return coords;
+  };
 
-    return {
-        attack,
-        randomAttack,
-        randomCoord,
-        playerType,
-        coords
-    }
-}
+  return {
+    attack,
+    randomAttack,
+    randomCoord,
+    playerType,
+    coords,
+  };
+};
 
-export default Player
+export default Player;
