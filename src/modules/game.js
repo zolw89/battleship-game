@@ -10,6 +10,8 @@ const Game = () => {
     const resetBtn = document.querySelector('.reset')
     const playerFleetDiv = document.querySelector('.fleet-div')
     const startGameBtn = document.querySelector('.start-game-btn')
+    const newGameScreen = document.querySelector('.restart-screen')
+    const winnerDiv = document.querySelector('.winner')
 
     const playerOne = Player('human')
     const playerTwo = Player('computer')
@@ -122,7 +124,6 @@ const Game = () => {
 
     playerBoard.placeShip(computerShipArray[0], 9, 9)
     renderPlayerBoard()
-    console.log(playerBoard.board)
 
     autoPlaceBtn.addEventListener('click', () => {
         resetBoard()
@@ -161,7 +162,8 @@ const Game = () => {
                 e.target.setAttribute('id', 'hit')
                 e.target.classList.add('attacked')
                 if(computerBoard.areAllSunk()) {             
-                    console.log('you win')
+                    newGameScreen.classList.remove('hide')
+                    winnerDiv.innerHTML = 'Congratulations! You have won!'
                     nextMoveFlag = false
                     return
                 }
@@ -186,7 +188,8 @@ const Game = () => {
                     setTimeout(() => {randomCompAtt()}, 600)
                     if(playerBoard.areAllSunk()) {
                         el.setAttribute('id', 'hit')
-                        console.log('you lose')
+                        newGameScreen.classList.remove('hide')
+                        winnerDiv.innerHTML = 'Ooops! You have lost!'
                         return
                     }
                 }
