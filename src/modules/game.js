@@ -16,12 +16,12 @@ const Game = () => {
   const playerOne = Player("human");
   const playerTwo = Player("computer");
 
-  computerBoardDiv.classList.add('hide')
-  playerFleetDiv.classList.remove('hide')
+  computerBoardDiv.classList.add("hide");
+  playerFleetDiv.classList.remove("hide");
 
   //create player's and computer's boards
   const createPlayersBoard = (board, num = 10) => {
-    board.innerHTML = ''
+    board.innerHTML = "";
     for (let i = 0; i < num; i++) {
       for (let j = 0; j < num; j++) {
         const cell = document.createElement("div");
@@ -189,8 +189,8 @@ const Game = () => {
     }
   });
 
-  console.log(playerBoard.board)
-  console.log(computerBoard.board)
+  console.log(playerBoard.board);
+  console.log(computerBoard.board);
 
   const randomCompAtt = () => {
     let coords = playerTwo.randomAttack(playerBoard);
